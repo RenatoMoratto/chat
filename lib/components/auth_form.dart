@@ -14,7 +14,8 @@ class _AuthFormState extends State<AuthForm> {
   final _formData = AuthFormData();
 
   void _submit() {
-    _formKey.currentState?.validate();
+    final isValid = _formKey.currentState?.validate() ?? false;
+    if (!isValid) return;
   }
 
   @override
@@ -33,12 +34,26 @@ class _AuthFormState extends State<AuthForm> {
                   initialValue: _formData.name,
                   onChanged: (name) => _formData.name = name,
                   decoration: const InputDecoration(labelText: 'Nome'),
+                  validator: (name_) {
+                    final name = name_ ?? '';
+                    if (name.trim().length < 5) {
+                      return 'Nome deve possuir ao menos 5 caracteres';
+                    }
+                    return null;
+                  },
                 ),
               TextFormField(
                 key: const ValueKey('email'),
                 initialValue: _formData.email,
                 onChanged: (email) => _formData.email = email,
                 decoration: const InputDecoration(labelText: 'E-mail'),
+                validator: (email_) {
+                  final email = email_ ?? '';
+                  if (!email.contains('@')) {
+                    return 'E-mail informado não é válido';
+                  }
+                  return null;
+                },
               ),
               TextFormField(
                 key: const ValueKey('password'),
@@ -46,6 +61,13 @@ class _AuthFormState extends State<AuthForm> {
                 onChanged: (password) => _formData.password = password,
                 obscureText: true,
                 decoration: const InputDecoration(labelText: 'Senha'),
+                validator: (password_) {
+                  final password = password_ ?? '';
+                  if (password.length < 6) {
+                    return 'Senha deve possuir ao menos 6 caracteres';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 12),
               ElevatedButton(
