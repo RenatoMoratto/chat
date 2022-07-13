@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "608794212315",
+    "project_id": "chat-156da",
+    "storage_bucket": "chat-156da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608794212315:android:96b659f34a9d29a505d9fe",
+        "android_client_info": {
+          "package_name": "com.renato.moratto.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608794212315-kld39l4ubjro2ksa41bg5kpbv1mksvev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9Qh1YT2sWRGFdClYvpgBSCQR1GmDDxBk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "608794212315-kld39l4ubjro2ksa41bg5kpbv1mksvev.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
