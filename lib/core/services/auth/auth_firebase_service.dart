@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -52,11 +53,25 @@ class AuthFirebaseService implements AuthService {
     );
 
     if (credential.user == null) return;
+
     final imageName = '${credential.user!.uid}.jpg';
     final imageURL = await _uploadUserImage(image, imageName);
 
-    credential.user?.updateDisplayName(name);
-    credential.user?.updatePhotoURL(imageURL);
+    await credential.user?.updateDisplayName(name);
+    await credential.user?.updatePhotoURL(imageURL);
+
+    await _saveChatUser(_toChatUser(credential.user!, imageURL));
+  }
+
+  Future<void> _saveChatUser(ChatUser user) async {
+    final store = FirebaseFirestore.instance;
+    final docRef = store.collection('users').doc(user.id);
+
+    return docRef.set({
+      'name': user.name,
+      'email': user.email,
+      'imageURL': user.imageURL,
+    });
   }
 
   Future<String?> _uploadUserImage(File? image, String imageName) async {
@@ -64,17 +79,17 @@ class AuthFirebaseService implements AuthService {
 
     final storage = FirebaseStorage.instance;
     final imageRef = storage.ref().child('user_images').child(imageName);
-    imageRef.putFile(image).whenComplete(() {});
+    await imageRef.putFile(image).whenComplete(() {});
 
     return await imageRef.getDownloadURL();
   }
 
-  static ChatUser _toChatUser(User user) {
+  static ChatUser _toChatUser(User user, [String? imageURL]) {
     return ChatUser(
       id: user.uid,
       name: user.displayName ?? user.email!.split('@')[0],
       email: user.email!,
-      imageURL: user.photoURL ?? 'assets/images/avatar.png',
+      imageURL: imageURL ?? user.photoURL ?? 'assets/images/avatar.png',
     );
   }
 }
