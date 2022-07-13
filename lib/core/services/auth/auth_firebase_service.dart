@@ -74,7 +74,7 @@ class AuthFirebaseService implements AuthService {
       id: user.uid,
       name: user.displayName ?? user.email!.split('@')[0],
       email: user.email!,
-      imageUrl: user.photoURL ?? 'assets/images/avatar.png',
+      imageURL: user.photoURL ?? 'assets/images/avatar.png',
     );
   }
 }
