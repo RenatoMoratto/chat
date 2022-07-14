@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
+import '../../../main.dart';
 import '../../models/chat_notification.dart';
 
 class ChatNotificationService with ChangeNotifier {
@@ -62,5 +63,14 @@ class ChatNotificationService with ChangeNotifier {
       title: msg.notification!.title ?? 'Não informado!',
       body: msg.notification!.body ?? 'Não informado!',
     ));
+
+    final String route = msg.data['screen'];
+
+    if (route.isNotEmpty) {
+      Navigator.pushNamed(
+        navigatorKey.currentState!.context,
+        route,
+      );
+    }
   }
 }

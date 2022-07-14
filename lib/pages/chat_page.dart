@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../utils/app_routes.dart';
 import '../components/messages.dart';
 import '../components/new_message.dart';
 import '../core/services/auth/auth_service.dart';
 import '../core/services/notification/chat_notification_service.dart';
-import 'notification_page.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({Key? key}) : super(key: key);
@@ -48,13 +48,7 @@ class ChatPage extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const NotificationPage();
-                      },
-                    ),
-                  );
+                  Navigator.of(context).pushNamed(AppRoutes.notifications);
                 },
                 icon: const Icon(Icons.notifications),
               ),
